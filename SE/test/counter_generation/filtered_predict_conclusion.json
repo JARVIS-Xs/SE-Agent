@@ -1,0 +1,16 @@
+{
+  "sphinx-doc__sphinx-10449": {
+    "approach_summary": "The patch modifies the Sphinx configuration to prevent return types from being displayed for classes when using autodoc_typehints = 'description'.",
+    "modified_files": [
+      "docs/conf.py"
+    ],
+    "key_changes": "Added 'autodoc_class_signature = \"separated\"' to the Sphinx configuration",
+    "strategy": "Adjust Sphinx configuration to handle class signatures differently from function signatures",
+    "specific_technique_from_first_solution": "Using autodoc_class_signature option",
+    "specific_files_or_functions": "docs/conf.py",
+    "assumptions_made_in_first_solution": "The issue is specific to class signatures and can be resolved by separating class and function signature handling",
+    "alternative_approach_1": "Implement a custom Sphinx extension to modify the behavior of autodoc for class signatures",
+    "component_not_touched_in_first_solution": "sphinx.ext.autodoc extension code",
+    "different_perspective": "Instead of modifying Sphinx configuration, consider adjusting the docstring format or using a different documentation style for classes"
+  }
+}

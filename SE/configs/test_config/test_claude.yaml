@@ -1,0 +1,32 @@
+
+# Configuration for 103 dataset with DeepSeek model and Claude config
+# Based on Atlas/base_run_script/103/dpsk_claude_config.py
+
+# Base configuration to merge with
+base_config: "/home/uaih3k9x/630_swe/config/benchmarks/250522_anthropic_filemap_simple_review.yaml"
+
+# Model configuration
+model:
+  name: "anthropic/claude-sonnet-4-20250514"
+  api_base: "https://api.ezai88.com"
+  api_key: "sk-KcNy1X5Pl33be23Rtjs2UKTsCBiD8cWM9YzK0g8tC4pRHcLm"
+  max_input_tokens: 128000
+  max_output_tokens: 64000
+  per_instance_cost_limit: 0.01
+  total_cost_limit: 0.1
+
+# Instance configuration
+instances:
+  json_file: "/home/uaih3k9x/630_swe/Aeon/instances/5.json"
+  key: "unresolved"
+  subset: "verified"
+  split: "test"
+  shuffle: false
+  evaluate: false
+
+# Output configuration
+output_dir: "Aeon/trajectories/testt_5"
+suffix: "specific_instances"
+num_workers: 14
+
+# Special Arugments like: 1.--enhancement_json_path=Aeon/enhancement_data/5.json,2.instance_templates_dir

@@ -1,0 +1,69 @@
+# 这是一个配置文件，为各个instance配置个性化的prompt
+# 格式为：instance_id: {prompt配置}
+
+instance_prompts:
+  # scikit-learn实例的个性化prompt配置
+  scikit-learn__scikit-learn-14629:
+    system_template: |
+      你是一个专门解决机器学习库问题的专家。在解决问题时，请特别关注：
+      1. scikit-learn中的交叉验证和模型选择实现细节
+      2. 并行计算和性能优化
+      3. 参数传递和一致性检查
+      
+      当你看到scikit-learn代码中的问题，请遵循以下步骤：
+      1. 先理解交叉验证的整体流程
+      2. 仔细分析并行处理部分
+      3. 确保参数传递的一致性
+      4. 检查错误处理机制
+      
+      记住，scikit-learn有严格的向后兼容性要求，请确保你的修改不会破坏现有接口。
+    
+    instance_template: |
+      我们正在解决scikit-learn库中的一个关于交叉验证的问题。请特别注意_validation.py文件中的并行处理逻辑。
+      
+      在检查代码时，要特别注意fit_and_score函数如何处理传入的参数。我们需要确保在并行执行中所有参数都被正确传递。
+      
+      {{problem_statement}}
+      
+      请按照以下步骤解决：
+      1. 找到并理解_validation.py中的fit_and_score函数
+      2. 检查参数传递流程，特别是并行计算部分
+      3. 确认错误的根本原因
+      4. 提供一个不会破坏API兼容性的修复方案
+      
+      在提交前请验证你的修复是否解决了问题并且不会引入新的问题。
+
+  # django实例的个性化prompt配置
+  django__django-14631:
+    system_template: |
+      你是一个Django框架专家，特别擅长解决Django表单处理的问题。解决问题时请注意：
+      1. Django表单的渲染和数据处理流程
+      2. 字段表示和模板渲染机制
+      3. 表单验证和错误处理
+      
+      在修复代码时，请遵循Django的编码风格和最佳实践。
+    
+    instance_template: |
+      我们正在解决Django框架中关于表单渲染的问题。请特别注意forms模块中的boundfield.py文件。
+      
+      {{problem_statement}}
+      
+      请确保你的修复遵循Django的代码风格和惯例，并且不会破坏向后兼容性。
+
+  # 通用的默认配置
+  default:
+    system_template: |
+      你是一个优秀的代码修复专家，擅长分析和解决各种代码库中的问题。请按照以下步骤解决问题：
+      1. 仔细理解问题描述
+      2. 分析相关代码文件和结构
+      3. 定位根本原因
+      4. 提供最小且有效的修复方案
+      
+      请确保你的修复符合项目的编码风格并保持向后兼容性。
+    
+    instance_template: |
+      我们正在解决以下问题：
+      
+      {{problem_statement}}
+      
+      请分析问题，找出根本原因，并提供适当的修复方案。确保你的修复是最小且有效的，并且符合项目的编码风格。

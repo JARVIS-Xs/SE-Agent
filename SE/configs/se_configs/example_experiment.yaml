@@ -1,0 +1,47 @@
+# SE Framework Configuration Example
+# 运行目录: /home/uaih3k9x/630_swe (根目录)
+# 所有路径相对于此根目录
+
+# 主模型配置 (SWE-agent使用)
+model:
+  name: "anthropic/claude-sonnet-4-20250514"
+  api_base: "https://api.ezai88.com"
+  api_key: "your-api-key"
+  max_input_tokens: 128000
+  max_output_tokens: 64000
+  per_instance_cost_limit: 0.01
+  total_cost_limit: 0.1
+
+# 算子模型配置 (算子处理时使用，可选)
+operator_models:
+  name: "anthropic/claude-sonnet-4-20250514"
+  api_base: "https://api.ezai88.com" 
+  api_key: "your-api-key"
+  max_input_tokens: 128000
+  max_output_tokens: 64000
+
+# 实例配置
+instances:
+  json_file: "Aeon/instances/test.json"
+  key: "instances"
+  subset: "verified"
+  split: "test"
+  shuffle: false
+  evaluate: false
+
+# 输出配置 (重要参数)
+output_dir: "SE/trajectories/example_experiment"
+suffix: "specific_instances"
+num_workers: 14
+
+# 策略编排：定义多次迭代的执行计划
+strategy:
+  iterations:
+    - base_config: "configs/base_configs/baseconfig1.yaml"           # 第1次：基础配置
+      operator: null
+    - base_config: "configs/base_configs/baseconfig2.yaml"           # 第2次：不同配置
+      operator: null  
+    - base_config: "test_claude"           # 第3次：基础配置+算子
+      operator: "Crossover"
+    - base_config: "baseconfig1"           # 第4次：算子处理
+      operator: "Conclusion"

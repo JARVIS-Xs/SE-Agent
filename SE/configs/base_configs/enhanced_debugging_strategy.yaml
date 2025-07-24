@@ -1,0 +1,173 @@
+# This template only features minor adaptions from the 250225 config.
+# For running on lite:
+# sweagent run-batch --config config/benchmarks/250522_anthropic_filemap_simple_review.yaml --num_workers=20
+# To fully reproduce, please run from the submissions/250522-sonnet-4-sbv branch
+# For running on test:
+random_delay_multiplier: 1.0
+instances:
+  type: swe_bench
+  subset: verified
+  split: test
+  shuffle: true
+  evaluate: false
+  deployment:
+    type: docker
+    docker_args:
+      - '--memory=10g'
+agent:
+  type: default
+  templates:
+    system_template: |-
+      SETTING: You are an autonomous programmer, and you're working directly in the command line with a special interface.
+
+      The special interface consists of a file editor that shows you {{WINDOW}} lines of a file at a time.
+      In addition to typical bash commands, you can also use specific commands to help you navigate and edit files.
+      To call a command, you need to invoke it with a function call/tool call.
+
+      Please note that THE EDIT COMMAND REQUIRES PROPER INDENTATION.
+
+      For example, if you are looking at this file:
+
+      def fct():
+          print("Hello world")
+
+      and you want to edit the file to read:
+
+      def fct():
+          print("Hello")
+          print("world")
+
+      you search string should be `Hello world` and your replace string should be `"Hello"\n    print("world")`
+      (note the extra spaces before the print statement!).
+
+      You could also get the same result by search for `    print("Hello world")` and replace with `    print("Hello")\n    print("world")`.
+
+      RESPONSE FORMAT:
+      Your shell prompt is formatted as follows:
+      (Open file: <path>)
+      (Current directory: <cwd>)
+      bash-$
+
+      First, you should _always_ include a general thought about what you're going to do next.
+      Then, for every response, you must include exactly _ONE_ tool call/function call.
+
+      Remember, you should always include a _SINGLE_ tool call/function call and then wait for a response from the shell before continuing with more discussion and commands. Everything you include in the DISCUSSION section will be saved for future reference.
+      If you'd like to issue two commands at once, PLEASE DO NOT DO THAT! Please instead first submit just the first tool call, and then after receiving a response you'll be able to issue the second .
+      Note that the environment does NOT support interactive session commands (e.g. python, vim), so please do not invoke them.
+    instance_template: |-
+      We're currently solving the following issue within our repository. Here's the issue text:
+      ISSUE:
+      {{problem_statement}}
+
+      INSTRUCTIONS:
+      Now, you're going to solve this issue on your own. Your terminal session has started and you're in the repository's root directory. You can use any bash commands or the special interface to help you. Edit all the files you need to and run any checks or tests that you want.
+      Remember, YOU SHOULD ALWAYS INCLUDE EXACTLY ONE TOOL CALL/FUNCTION CALL PER RESPONSE.
+      When you're satisfied with all of the changes you've made, you can submit your changes to the code base by simply running the submit command.
+      Note however that you cannot use any interactive session commands (e.g. python, vim) in this environment, but you can write scripts and run them. E.g. you can write a python script and then run it with the python command.
+
+      NOTE ABOUT THE EDIT COMMAND: Indentation really matters! When editing a file, make sure to insert appropriate indentation before each line!
+
+      GENERAL IMPORTANT TIPS:
+
+      1. If you run a command and it doesn't work, try running a different command. A command that did not work once will not work the second time unless you modify it!
+
+      2. If you open a file and need to get to an area around a specific line that is not in the first 100 lines, say line 583, don't just use the scroll_down command multiple times. Instead, use the goto 583 command. It's much quicker.
+
+      3. If the bug reproduction script requires inputting/reading a specific file, such as buggy-input.png, and you'd like to understand how to input that file, conduct a search in the existing repo code, to see whether someone else has already done that. Do this by running the command: find_file "buggy-input.png" If that doesn't work, use the linux 'find' command.
+
+      4. Always make sure to look at the currently open file and the current working directory (which appears right after the currently open file). The currently open file might be in a different directory than the working directory! Note that some commands, such as 'create', open files, so they might change the current open file.
+
+      5. When editing files, it is easy to accidentally to write code with incorrect indentation or make other mistakes. Always check the code after you issue an edit to make sure that it reflects what you wanted to accomplish. If it didn't, issue another command to fix it.
+
+      6. When editing files, first explain the code you want to edit and why it is causing the problem. Then explain the edit you want to make and how it fixes the problem. Explain how the edit does not break existing functionality.
+
+      7. Do not try to install any packages with `pip`, `conda`, or any other way. This will usually not work. If the environment is not set up correctly, try to fix the issue without executing python code or running any tests that require the package installed.
+
+      STRATEGY:
+
+      1. **Reproduce the Issue:**  
+         - Execute the provided bug reproduction script or steps in your local environment.  
+         - If the script runs silently, insert a confirmation message (e.g., `print("Reproduction successful—bug observed.")`) to verify execution.  
+      
+      2. **Code Investigation:**  
+         - Identify the relevant code sections using search tools or IDE navigation.  
+         - Open the suspected files and analyze the logic around the reported issue.  
+      
+      3. **Implement Fixes:**  
+         - Use an editor to modify the problematic code, ensuring changes align with the intended behavior.  
+         - Document adjustments with inline comments explaining the rationale.  
+      
+      4. **Verify the Fix:**  
+         - Re-run the reproduction script to confirm the bug is resolved.  
+         - Check for regression by ensuring existing functionality remains intact.  
+      
+      5. **Expand Test Coverage:**  
+         - Develop new test cases, including edge scenarios, to validate robustness.  
+         - If failures occur, refine the fix and repeat verification until all tests pass.  
+      
+      6. **Final Review:**  
+         - Cross-check changes against project coding standards.  
+         - Summarize modifications and test results for documentation or version control.
+
+      (Open file: {{open_file}})
+      (Current directory: {{working_dir}})
+      bash-$
+    next_step_template: |-
+      {{observation}}
+      (Open file: {{open_file}})
+      (Current directory: {{working_dir}})
+      bash-$
+    next_step_no_output_template: |-
+      Your command ran successfully and did not produce any output.
+      (Open file: {{open_file}})
+      (Current directory: {{working_dir}})
+      bash-$
+    demonstration_template: |
+      Here is a demonstration of how to correctly accomplish this task.
+      It is included to show you how to correctly use the interface.
+      You do not need to follow exactly what is done in the demonstration.
+      --- DEMONSTRATION ---
+      {{demonstration}}
+      --- END OF DEMONSTRATION ---
+    demonstrations:
+      - /home/uaih3k9x/630_swe/trajectories/traj_claude_tools_default.traj
+    put_demos_in_history: true
+  tools:
+    execution_timeout: 300
+    bundles:
+      - path: tools/registry
+      - path: tools/edit_anthropic
+      - path: tools/review_on_submit_m
+      - path: tools/diff_state
+    enable_bash_tool: true
+    parse_function:
+      type: function_calling
+    env_variables:
+      PAGER: cat
+      MANPAGER: cat
+      LESS: -R
+      PIP_PROGRESS_BAR: 'off'
+      TQDM_DISABLE: '1'
+    registry_variables:
+      USE_FILEMAP: 'true'
+      SUBMIT_REVIEW_MESSAGES:
+        - |
+          Thank you for your work on this issue. Please carefully follow the steps below to help review your changes.
+
+          1. If you made any changes to your code after running the reproduction script, please run the reproduction script again.
+            If the reproduction script is failing, please revisit your changes and make sure they are correct.
+            If you have already removed your reproduction script, please ignore this step.
+          2. Remove your reproduction script (if you haven't done so already).
+          3. If you have modified any TEST files, please revert them to the state they had before you started fixing the issue.
+            You can do this with `git checkout -- /path/to/test/file.py`. Use below <diff> to find the files you need to revert.
+          4. Run the submit command again to confirm.
+
+          Here is a list of all of your changes:
+
+          <diff>
+          {{diff}}
+          </diff>
+  history_processors:
+    - type: cache_control
+      last_n_messages: 2
+

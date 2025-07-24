@@ -1,0 +1,9 @@
+instances_by_exit_status:
+    submitted:
+    - sphinx-doc__sphinx-8638
+    submitted (exit_format):
+    - sphinx-doc__sphinx-8548
+    - sphinx-doc__sphinx-8551
+    - sphinx-doc__sphinx-9461
+    - sphinx-doc__sphinx-9229
+total_cost: 0

@@ -1,0 +1,16 @@
+{
+  "unresolved": [
+    "astropy__astropy-13033",
+    "astropy__astropy-13236",
+    "astropy__astropy-13398",
+    "astropy__astropy-14182",
+    "astropy__astropy-14365",
+    "astropy__astropy-14598",
+    "astropy__astropy-7606",
+    "astropy__astropy-8707",
+    "astropy__astropy-8872",
+    "django__django-10097",
+    "django__django-10554",
+    "django__django-10999"
+  ]
+} 

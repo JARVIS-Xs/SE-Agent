@@ -1,0 +1,135 @@
+# This template only features minor adaptions from the 250225 config.
+# For running on lite:
+# sweagent run-batch --config config/benchmarks/250522_anthropic_filemap_simple_review.yaml --num_workers=20
+# To fully reproduce, please run from the submissions/250522-sonnet-4-sbv branch
+# For running on test:
+random_delay_multiplier: 1.0
+instances:
+  type: swe_bench
+  subset: verified
+  split: test
+  shuffle: true
+  evaluate: false
+  deployment:
+    type: docker
+    docker_args:
+      - '--memory=10g'
+agent:
+  type: default
+  templates:
+    system_template: |-
+      SETTING: You are an autonomous programmer, and you're working directly in the command line with a special interface.
+
+      The special interface consists of a file editor that shows you {{WINDOW}} lines of a file at a time.
+      In addition to typical bash commands, you can also use specific commands to help you navigate and edit files.
+      To call a command, you need to invoke it with a function call/tool call.
+
+      Please note that THE EDIT COMMAND REQUIRES PROPER INDENTATION.
+
+      For example, if you are looking at this file:
+
+      def fct():
+          print("Hello world")
+
+      and you want to edit the file to read:
+
+      def fct():
+          print("Hello")
+          print("world")
+
+      you search string should be `Hello world` and your replace string should be `"Hello"\n    print("world")`
+      (note the extra spaces before the print statement!).
+
+      You could also get the same result by search for `    print("Hello world")` and replace with `    print("Hello")\n    print("world")`.
+
+      RESPONSE FORMAT:
+      Your shell prompt is formatted as follows:
+      (Open file: <path>)
+      (Current directory: <cwd>)
+      bash-$
+
+      First, you should _always_ include a general thought about what you're going to do next.
+      Then, for every response, you must include exactly _ONE_ tool call/function call.
+
+      Remember, you should always include a _SINGLE_ tool call/function call and then wait for a response from the shell before continuing with more discussion and commands. Everything you include in the DISCUSSION section will be saved for future reference.
+      If you'd like to issue two commands at once, PLEASE DO NOT DO THAT! Please instead first submit just the first tool call, and then after receiving a response you'll be able to issue the second .
+      Note that the environment does NOT support interactive session commands (e.g. python, vim), so please do not invoke them.
+    instance_template: |-
+      <uploaded_files>
+      {{working_dir}}
+      </uploaded_files>
+      I've uploaded a python code repository in the directory {{working_dir}}. Consider the following PR description:
+
+      <pr_description>
+      {{problem_statement}}
+      </pr_description>
+
+      Can you help me implement the necessary changes to the repository so that the requirements specified in the <pr_description> are met?
+      I've already taken care of all changes to any of the test files described in the <pr_description>. This means you DON'T have to modify the testing logic or any of the tests in any way!
+      Your task is to make the minimal changes to non-tests files in the {{working_dir}} directory to ensure the <pr_description> is satisfied.
+      Follow these steps to resolve the issue:
+      1. As a first step, it might be a good idea to find and read code relevant to the <pr_description>
+      2. Create a script to reproduce the error and execute it with `python <filename.py>` using the bash tool, to confirm the error
+      3. Edit the sourcecode of the repo to resolve the issue
+      4. Rerun your reproduce script and confirm that the error is fixed!
+      5. Think about edgecases and make sure your fix handles them as well
+      Your thinking should be thorough and so it's fine if it's very long.
+    next_step_template: |-
+      {{observation}}
+      (Open file: {{open_file}})
+      (Current directory: {{working_dir}})
+      bash-$
+    next_step_no_output_template: |-
+      Your command ran successfully and did not produce any output.
+      (Open file: {{open_file}})
+      (Current directory: {{working_dir}})
+      bash-$
+    demonstration_template: |
+      Here is a demonstration of how to correctly accomplish this task.
+      It is included to show you how to correctly use the interface.
+      You do not need to follow exactly what is done in the demonstration.
+      --- DEMONSTRATION ---
+      {{demonstration}}
+      --- END OF DEMONSTRATION ---
+    demonstrations:
+      - /home/uaih3k9x/630_swe/trajectories/traj_claude_tools_default.traj
+    put_demos_in_history: true
+  tools:
+    execution_timeout: 300
+    bundles:
+      - path: tools/registry
+      - path: tools/edit_anthropic
+      - path: tools/review_on_submit_m
+      - path: tools/diff_state
+    enable_bash_tool: true
+    parse_function:
+      type: function_calling
+    env_variables:
+      PAGER: cat
+      MANPAGER: cat
+      LESS: -R
+      PIP_PROGRESS_BAR: 'off'
+      TQDM_DISABLE: '1'
+    registry_variables:
+      USE_FILEMAP: 'true'
+      SUBMIT_REVIEW_MESSAGES:
+        - |
+          Thank you for your work on this issue. Please carefully follow the steps below to help review your changes.
+
+          1. If you made any changes to your code after running the reproduction script, please run the reproduction script again.
+            If the reproduction script is failing, please revisit your changes and make sure they are correct.
+            If you have already removed your reproduction script, please ignore this step.
+          2. Remove your reproduction script (if you haven't done so already).
+          3. If you have modified any TEST files, please revert them to the state they had before you started fixing the issue.
+            You can do this with `git checkout -- /path/to/test/file.py`. Use below <diff> to find the files you need to revert.
+          4. Run the submit command again to confirm.
+
+          Here is a list of all of your changes:
+
+          <diff>
+          {{diff}}
+          </diff>
+  history_processors:
+    - type: cache_control
+      last_n_messages: 2
+

@@ -1,0 +1,48 @@
+# SE Configuration for crossover operator test
+# 运行目录: /home/uaih3k9x/630_swe (根目录)
+# 用于测试 crossover 算子的多迭代配置
+
+# 主模型配置 
+model:
+  name: "openai/deepseek-chat"
+  api_base: "http://publicshare.a.pinggy.link"
+  api_key: "EMPTY"
+  max_input_tokens: 128000
+  max_output_tokens: 64000
+  per_instance_cost_limit: 0
+  total_cost_limit: 0
+
+# 算子模型配置 (与主模型一致，但无cost limits)
+operator_models:
+  name: "openai/deepseek-chat"
+  api_base: "http://publicshare.a.pinggy.link"
+  api_key: "EMPTY"
+  max_input_tokens: 128000
+  max_output_tokens: 64000
+
+# 实例配置 - 使用少量实例进行测试
+instances:
+  json_file: "SE/instances/1.json"
+  key: "unresolved"
+  subset: "verified"
+  split: "test"
+  shuffle: false
+  evaluate: false
+
+# 输出配置
+output_dir: "SE/trajectories/crossover_test_{timestamp}"
+suffix: "crossover_test"
+num_workers: 4
+
+# 基础配置引用 (从base_configs目录)
+base_config: "config/benchmarks/250522_anthropic_filemap_simple_review.yaml"
+
+# 策略编排 - 测试 crossover 算子（需要至少3次迭代）
+strategy:
+  iterations:
+    - base_config: "SE/configs/base_configs/baseconfig1.yaml"
+      operator: null
+    - base_config: "SE/configs/base_configs/baseconfig2.yaml"
+      operator: "alternative_strategy"
+    - base_config: "SE/configs/base_configs/baseconfig2.yaml"
+      operator: "crossover"
