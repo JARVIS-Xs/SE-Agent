@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.12+-blue.svg" alt="Python"></a>
-  <a href="#citation"><img src="https://img.shields.io/badge/Paper-arXiv-red.svg" alt="Paper"></a>
+  <a href="https://www.arxiv.org/abs/2508.02085"><img src="https://img.shields.io/badge/Paper-arXiv-red.svg" alt="Paper"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
   <a href="https://www.swebench.com"><img src="https://img.shields.io/badge/SWE--bench-Verified%20%231-gold.svg" alt="SWE-bench"></a>
 </p>
@@ -28,6 +28,10 @@
 ## 🎯 What is SE-Agent?
 
 SE-Agent is a **meta-learning framework** that enables LLM-based agents to **evolve their problem-solving strategies** through iterative self-improvement. Unlike traditional approaches that rely on numerical optimization, SE-Agent operates at the **cognitive strategy level**, analyzing failure patterns and generating fundamentally different solution approaches.
+
+<div align="center">
+<img src="static/img/framework.jpg" alt="SE-Agent Framework" width="500px" />
+</div>
 
 ### 🔥 Key Breakthrough
 
@@ -45,13 +49,6 @@ SE-Agent ranks **first among open-source frameworks** on SWE-bench Verified.
 </div>
 
 #### ✨ Performance Comparison: Leading with Significant Gains!
-Key relative improvements over SWE-Agent baseline:
-- Llama-3.1-70B: **+112%**
-- GPT-4o: **+80%**
-- Claude-3.7-Sonnet: **+51%**
-
-It also achieves an average **+30%** gain against the stronger MCTS-based SWE-Search.
-
 <div align="center">
 <img src="static/img/table1.png" alt="SE-Agent Framework Illustration" width="600px" />
 </div>
@@ -62,7 +59,7 @@ Get SE-Agent running in **30 seconds**:
 
 ```bash
 # 1. Clone and install
-git clone https://github.com/your-repo/SE-Agent.git
+git clone https://github.com/JARVIS-Xs/SE-Agent.git
 cd SE-Agent
 pip install -e .
 
@@ -86,11 +83,6 @@ python SE/basic_run.py --mode execute
 <details>
 <summary>🔧 <strong>Need help with setup?</strong></summary>
 
-**System Requirements:**
-- Python 3.12+ 
-- 8GB+ RAM
-- API access to DeepSeek/OpenAI/Anthropic
-
 **Alternative Installation:**
 ```bash
 conda create -n SE python=3.12
@@ -112,34 +104,21 @@ export ANTHROPIC_API_KEY="your_key"
 
 SE-Agent implements **three core self-evolution operations** that transform how agents approach problem-solving:
 
-<div align="center">
-<img src="static/img/framework.jpg" alt="SE-Agent Framework" width="500px" />
-</div>
-
 ### 🔄 Three Core Operations
 
-#### 1. **🔧 Revision** - *Learn from Failures*
-Analyzes failed attempts to generate **architecturally different** solution strategies. Goes beyond simple retries by identifying fundamental approach limitations and creating orthogonal problem-solving paradigms.
+#### 1. **🔧 Revision** - *Failure-Driven Strategy Generation*
+Analyzes individual failed trajectories through **deep self-reflection** and **targeted improvement**. Goes beyond simple retries by identifying fundamental approach limitations and creating **architecturally orthogonal** problem-solving paradigms. This involves analyzing a single trajectory to identify errors, inefficiencies, or conceptual blind spots, then prompting the agent to generate completely different solution approaches that address these specific limitations.
 
-#### 2. **🤝 Recombination** - *Cross-Trajectory Synthesis*  
-Intelligently combines strengths from multiple solution attempts. Creates novel approaches by merging successful components while avoiding known failure patterns - enabling **1+1>2** synergistic effects.
+#### 2. **🤝 Recombination** - *Cross-Trajectory Knowledge Synthesis*  
+Creates novel trajectories by **intelligently combining strengths** from multiple existing solution paths. This is where **cross-trajectory inspiration** primarily occurs - SE-Agent intelligently selects high-performing segments from different trajectories and merges them to construct superior approaches. The process explicitly leverages the **interdependence of various attempts**, allowing successes in one area to compensate for shortcomings in others, enabling **1+1>2** synergistic effects that transcend individual trajectory limitations.
 
-#### 3. **✨ Refinement** - *Risk-Aware Optimization*
-Eliminates redundancies and streamlines solution paths using insights from the entire trajectory pool. Generates risk-aware guidance that prevents systematic blind spots and failure modes.
+#### 3. **✨ Refinement** - *Risk-Aware Trajectory Optimization*
+Optimizes promising trajectories by **eliminating redundancies** and **enhancing efficiency** using insights from the entire trajectory pool. After new trajectories are formed, this step further hones them by removing unnecessary steps, streamlining action sequences, and incorporating **risk-aware guidance** that prevents systematic blind spots and failure modes learned from the collective exploration history.
 
-### 🎯 Why This Works
+<div align="center">
+<img src="static/img/se-agent-case-study.png" alt="SE-Agent Case Study" width="600px" />
+</div>
 
-**Traditional MCTS Limitations:**
-- ❌ Local search spaces with random exploration
-- ❌ Numerical optimization without semantic understanding  
-- ❌ No cross-trajectory knowledge transfer
-- ❌ Limited strategy diversity
-
-**SE-Agent Advantages:**
-- ✅ **Semantic strategy evolution** at the cognitive level
-- ✅ **Failure-driven learning** from rich trajectory feedback
-- ✅ **Cross-trajectory inspiration** and knowledge accumulation
-- ✅ **Meta-cognitive optimization** beyond implementation details
 
 ## 💻 Usage Examples
 
@@ -211,7 +190,7 @@ SE-Agent consists of **three main components** working in harmony:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-repo/SE-Agent.git
+git clone https://github.com/JARVIS-Xs/SE-Agent.git
 cd SE-Agent
 
 # 2. Create environment  
@@ -323,70 +302,23 @@ class MyCustomOperator(TemplateOperator):
 register_operator("my_custom_operator", MyCustomOperator)
 ```
 
-## 🔬 Research & Citation
-
-### Academic Background
-
-SE-Agent represents a paradigm shift in agent-based problem solving, moving from numerical optimization approaches (like MCTS) to **semantic strategy evolution**. The framework demonstrates that LLM agents can effectively learn from their own failure patterns and generate fundamentally different solution approaches.
-
-
 ### Citation
 
 If you use SE-Agent in your research, please cite our paper:
 
 ```bibtex
-@article{se-agent-2024,
+@article{se-agent-2025,
   title={SE-Agent: Self-Evolution Trajectory Optimization in Multi-Step Reasoning with LLM-Based Agents},
-  author={[Author Names]},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
-  year={2024}
+  author={Jiaye Lin and Yifu Guo and Yuzhen Han and Sen Hu and Ziyi Ni and Licheng Wang and Mingguang Chen and Daxin Jiang and Binxing Jiao and Chen Hu and Huacan Wang},
+  journal={arXiv preprint arXiv:2508.02085},
+  year={2025},
+  url={https://arxiv.org/abs/2508.02085}
 }
 ```
-
-## 🚀 Future Directions
-
-### Planned Enhancements
-
-- **🎯 Advanced Operators**: Development of domain-specific evolution operators
-- **📊 Real-time Analytics**: Live performance monitoring and trajectory analysis
-- **🔄 Multi-Agent Evolution**: Collaborative evolution between multiple agent instances
-- **🌐 Broader Domains**: Extension to embodied AI and reinforcement learning scenarios
-
-### Research Opportunities
-
-- **🧠 Cognitive Architecture**: Deeper integration with cognitive science principles
-- **📈 Scalability**: Handling larger trajectory pools and more complex problems
-- **🔬 Theoretical Analysis**: Formal analysis of convergence properties and optimality guarantees
-- **🌍 Cross-Domain Transfer**: Applying self-evolution principles to other AI domains
 
 ## 🤝 Contributing
 
 We welcome contributions from the community! Here's how you can get involved:
-
-### Quick Contribution Guide
-
-```bash
-# 1. Fork and clone
-git clone https://github.com/your-username/SE-Agent.git
-cd SE-Agent
-
-# 2. Set up development environment
-conda create -n SE-dev python=3.12
-conda activate SE-dev
-pip install -e ".[dev]"
-
-# 3. Run tests to ensure everything works
-python SE/test/run_operator_tests.py
-
-# 4. Create your feature branch
-git checkout -b feature/amazing-feature
-
-# 5. Make changes and test
-# ... your changes ...
-python SE/test/run_operator_tests.py
-
-# 6. Submit pull request
-```
 
 ### Contribution Areas
 
@@ -406,20 +338,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-Special thanks to the following projects and communities:
+We would like to thank the following projects and contributors:
 
-- **[SWE-Agent](https://github.com/princeton-nlp/SWE-agent)** - Foundation agent framework
-- **[AutoGen](https://github.com/microsoft/autogen)** - Multi-agent conversation inspiration
-- **[OpenHands](https://github.com/All-Hands-AI/OpenHands)** - Software engineering agent platform
-- **[MLE-Bench](https://github.com/openai/mle-bench)** - Machine learning engineering benchmark
+- **[SWE-Agent](https://github.com/princeton-nlp/SWE-agent)** - Our foundation framework, developed by Carlos E. Jimenez, John Yang, Kilian Lieret and team
+- **[SWE-bench](https://github.com/SWE-bench/SWE-bench)** - For providing the evaluation benchmark and test datasets that enable rigorous assessment of software engineering AI agents
+- **[litellm](https://github.com/BerriAI/litellm)** - For unified LLM API interface support
+- **Open source community** - For contributions to the advancement of software engineering AI agents
 
 ## 📞 Contact & Support
 
 - **📧 Email**: [wanghuacan17@mails.ucas.ac.cn](mailto:wanghuacan17@mails.ucas.ac.cn)
-- **🐛 Issues**: [GitHub Issues](https://github.com/your-repo/SE-Agent/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/your-repo/SE-Agent/discussions)
-- **📖 Documentation**: [Full Documentation](https://se-agent.readthedocs.io)
-
+- **🐛 Issues**: [GitHub Issues](https://github.com/JARVIS-Xs/SE-Agent/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/JARVIS-Xs/SE-Agent/discussions)
 ---
 
 <div align="center">
@@ -427,7 +357,5 @@ Special thanks to the following projects and communities:
 **⭐ If SE-Agent helps your research or projects, please give us a star! ⭐**
 
 *Made with ❤️ by the SE-Agent Research Team*
-
-**[🚀 Get Started Now](#-quick-start)** | **[📖 Read the Paper](#citation)** | **[🤝 Join the Community](#-contributing)**
 
 </div>
