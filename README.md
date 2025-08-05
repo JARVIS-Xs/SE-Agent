@@ -77,28 +77,9 @@ python SE/basic_run.py --mode execute
 ```
 ✅ SE-Agent initialized successfully
 🔄 Starting self-evolution with 3 iterations  
-📈 Performance gain: +67% over baseline
 ```
 
-<details>
-<summary>🔧 <strong>Need help with setup?</strong></summary>
-
-**Alternative Installation:**
-```bash
-conda create -n SE python=3.12
-conda activate SE  
-pip install -e .
-```
-
-**Environment Variables:**
-```bash
-# Required (choose one)
-export DEEPSEEK_API_KEY="your_key"
-export OPENAI_API_KEY="your_key" 
-export ANTHROPIC_API_KEY="your_key"
-```
-
-</details>
+> 💡 **Need detailed setup?** See [📦 Installation & Configuration](#-installation--configuration) below
 
 ## 🧠 How SE-Agent Works
 
@@ -140,6 +121,8 @@ python SE/basic_run.py --config SE/configs/se_configs/experiment.yaml --mode exe
 
 ### Custom Operator Development
 
+SE-Agent supports flexible operator extensibility for creating custom evolution strategies:
+
 ```python
 from SE.operators import TemplateOperator, register_operator
 
@@ -152,6 +135,8 @@ class MyEvolutionOperator(TemplateOperator):
 register_operator("my_operator", MyEvolutionOperator)
 ```
 
+> 📖 **Complete Operator Development Guide:** See [SE/operators.md](SE/operators.md) for comprehensive operator development documentation including architecture, examples, and best practices
+
 ### Batch Processing
 
 ```bash
@@ -162,6 +147,23 @@ sweagent run-batch \
   --instances.subset verified \
   --instances.slice :10
 ```
+
+## 📚 Documentation
+
+SE-Agent provides comprehensive documentation for different use cases:
+
+| Document | Purpose | Audience |
+|----------|---------|----------|
+| [SE/README.md](SE/README.md) | SE Framework detailed guide | Developers & Researchers |
+| [SE/operators.md](SE/operators.md) | Operator development guide | Advanced developers |
+| [instruction.md](instruction.md) | Usage instructions & configuration | All users |
+
+### Quick Navigation
+
+- **🚀 Getting Started:** Follow the [Quick Start](#-quick-start) above
+- **⚙️ Configuration:** See [instruction.md](instruction.md) for detailed setup
+- **🔧 Development:** Check [SE/README.md](SE/README.md) for framework internals
+- **🛠️ Custom Operators:** Refer to [SE/operators.md](SE/operators.md) for operator development
 
 ## 🏗️ Architecture Overview
 
@@ -186,63 +188,48 @@ SE-Agent consists of **three main components** working in harmony:
 
 ## 📦 Installation & Configuration
 
-### Step-by-Step Installation
+### Installation Options
 
+**Option 1: Pip Installation (Recommended)**
 ```bash
-# 1. Clone repository
 git clone https://github.com/JARVIS-Xs/SE-Agent.git
 cd SE-Agent
+pip install -e .
+```
 
-# 2. Create environment  
+**Option 2: Conda Environment**
+```bash
+git clone https://github.com/JARVIS-Xs/SE-Agent.git
+cd SE-Agent
 conda create -n SE python=3.12
 conda activate SE
-
-# 3. Install in editable mode (required)
 pip install -e .
+```
 
-# 4. Verify installation
+**Verify Installation:**
+```bash
 sweagent --help
 python SE/test/run_operator_tests.py
 ```
 
-### Configuration
+### API Key Configuration
 
-**Environment Variables:**
+Choose one of the following API providers:
+
 ```bash
-# Create .env file with your API keys
-echo "DEEPSEEK_API_KEY=your_deepseek_key" >> .env
-echo "OPENAI_API_KEY=your_openai_key" >> .env  
-echo "ANTHROPIC_API_KEY=your_anthropic_key" >> .env
+# Create .env file
+echo "DEEPSEEK_API_KEY=your_deepseek_key" > .env
+# OR
+echo "OPENAI_API_KEY=your_openai_key" > .env  
+# OR
+echo "ANTHROPIC_API_KEY=your_anthropic_key" > .env
 ```
 
-**SE Configuration Example:**
-```yaml
-# SE/configs/se_configs/my_experiment.yaml
-model:
-  name: "deepseek/deepseek-chat"
-  api_key: "${DEEPSEEK_API_KEY}"
-
-instances:
-  json_file: "SE/instances/test.json"
-  key: "instances"
-
-strategy:
-  iterations:
-    - base_config: "baseconfig1"
-      operator: null
-    - base_config: "baseconfig2"  
-      operator: "alternative_strategy"
-    - base_config: "baseconfig2"
-      operator: "crossover"
-
-output_dir: "SE/trajectories/my_experiment"
-```
-
-
+> 📋 **Detailed Configuration Guide:** See [instruction.md](instruction.md) for comprehensive configuration options, strategy parameters, and execution workflows
 
 ## 🧪 Testing & Development
 
-### Running Tests
+### Quick Testing
 
 ```bash
 # Run all tests
@@ -251,56 +238,19 @@ pytest
 # Run SE framework tests  
 python SE/test/run_operator_tests.py
 
-# Test specific components
-python SE/test/test_operators.py
-python SE/test/test_traj_pool.py
-python SE/test/api_test.py
+# Demo mode (no API calls)
+python SE/basic_run.py --mode demo
 
 # Code formatting
 ruff check .
 ruff format .
 ```
 
-### Development Workflow
+### Development Resources
 
-```bash
-# 1. Create feature branch
-git checkout -b feature/my-enhancement
-
-# 2. Run tests before changes
-python SE/test/run_operator_tests.py
-
-# 3. Make changes and test
-python SE/basic_run.py --mode demo  # Quick validation
-
-# 4. Run full test suite
-pytest
-python SE/test/run_operator_tests.py
-
-# 5. Submit pull request
-```
-
-### Creating Custom Operators
-
-SE-Agent's operator system is designed for easy extensibility:
-
-```python
-from SE.operators import TemplateOperator, register_operator
-
-class MyCustomOperator(TemplateOperator):
-    def get_name(self):
-        return "my_custom_operator"
-    
-    def get_strategy_prefix(self):
-        return "MY CUSTOM EVOLUTION STRATEGY"
-    
-    def _generate_content(self, instance_info, problem_description, trajectory_data):
-        # Your custom evolution logic here
-        return "Generated evolution strategy content"
-
-# Register the operator
-register_operator("my_custom_operator", MyCustomOperator)
-```
+- **🔧 SE Framework Guide:** [SE/README.md](SE/README.md) - Comprehensive SE framework documentation with testing, development workflow, and project structure
+- **⚙️ Operator Development:** [SE/operators.md](SE/operators.md) - Complete operator development guide with architecture details and examples  
+- **📖 Usage Instructions:** [instruction.md](instruction.md) - Detailed usage instructions, configuration options, and execution strategies
 
 ### Citation
 
@@ -315,21 +265,6 @@ If you use SE-Agent in your research, please cite our paper:
   url={https://arxiv.org/abs/2508.02085}
 }
 ```
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Here's how you can get involved:
-
-### Contribution Areas
-
-| Area | Description | Skill Level |
-|------|-------------|-------------|
-| **🐛 Bug Fixes** | Fix issues in existing code | Beginner |
-| **📖 Documentation** | Improve docs and examples | Beginner |
-| **🧪 Tests** | Add test cases and improve coverage | Intermediate |
-| **🔧 Tools** | Develop utilities and helper scripts | Intermediate |
-| **🚀 Features** | Implement new operators and capabilities | Advanced |
-| **📊 Research** | Contribute to benchmarking and analysis | Advanced |
 
 
 ## 📄 License
