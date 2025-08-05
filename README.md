@@ -27,17 +27,11 @@
 
 ## 🎯 What is SE-Agent?
 
-SE-Agent is a **meta-learning framework** that enables LLM-based agents to **evolve their problem-solving strategies** through iterative self-improvement. Unlike traditional approaches that rely on numerical optimization, SE-Agent operates at the **cognitive strategy level**, analyzing failure patterns and generating fundamentally different solution approaches.
+SE-Agent is a self-evolution framework that enables information exchange between reasoning paths through a trajectory-level evolution mechanism, breaking the cognitive limitations of single trajectories. This approach expands the search space, escapes local optima, and demonstrates emergent capabilities from collective interactions, achieving 80% SOTA performance on SWE-bench Verified—truly realizing autonomous evolution for LLM-based agents in complex reasoning tasks.
 
 <div align="center">
 <img src="static/img/framework.jpg" alt="SE-Agent Framework" width="500px" />
 </div>
-
-### 🔥 Key Breakthrough
-
-**From Numerical Optimization → Semantic Strategy Evolution**
-
-Traditional methods like MCTS explore solution spaces through random sampling and numerical rewards. SE-Agent analyzes **why** approaches fail and generates **architecturally different** strategies, leading to breakthrough performance gains.
 
 ### 📊 Performance Results
 
