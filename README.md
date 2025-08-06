@@ -10,7 +10,7 @@
 </div>
 
 <p align="center">
-  <strong>🏆 State-of-the-Art Performance on SWE-bench Verified</strong><br>
+  <strong>🏆 State-of-the-Art Performance on SWE-bench Verified: 80%</strong><br>
   <strong>🚀 Up to +112% Performance Gain</strong><br>
 </p>
 
@@ -26,24 +26,24 @@
 
 ## 🎯 What is SE-Agent?
 
-SE-Agent is a self-evolution framework that enables information exchange between reasoning paths through a trajectory-level evolution mechanism, breaking the cognitive limitations of single trajectories. This approach expands the search space, escapes local optima, and demonstrates emergent capabilities from collective interactions, achieving 80% SOTA performance on SWE-bench Verified—truly realizing autonomous evolution for LLM-based agents in complex reasoning tasks.
+**SE-Agent** is a **self-evolution framework** that enables information exchange between reasoning paths through a trajectory-level evolution mechanism, breaking the cognitive limitations of single trajectories. This approach expands the search space, escapes local optima, and demonstrates emergent capabilities from collective interactions, achieving **80% Top1 performance** on **SWE-bench Verified**, truly realizing autonomous evolution for LLM-based agents in complex reasoning tasks.
 
 <div align="center">
-<img src="static/img/framework.jpg" alt="SE-Agent Framework" width="500px" />
+<img src="static/img/framework.jpg" alt="SE-Agent Framework" width="800px" />
 </div>
 
 ### 📊 Performance Results
 
 #### 🏆 SWE-bench Verified Evaluation: State-of-the-Art Performance!
-SE-Agent ranks **first among open-source frameworks** on SWE-bench Verified.
+SE-Agent ranks **Top1 among open-source frameworks** on SWE-bench Verified.
 
 <div align="center">
-<img src="static/img/ranking_new.jpg" alt="Open-Source Framework Comparison" width="600px" />
+<img src="static/img/ranking_new.jpg" alt="Open-Source Framework Comparison" width="800px" />
 </div>
 
 #### ✨ Performance Comparison: Leading with Significant Gains!
 <div align="center">
-<img src="static/img/table1.png" alt="SE-Agent Framework Illustration" width="600px" />
+<img src="static/img/table1.png" alt="SE-Agent Framework Illustration" width="800px" />
 </div>
 
 ## ⚡ Quick Start
@@ -90,7 +90,7 @@ Creates novel trajectories by **intelligently combining strengths** from multipl
 Optimizes promising trajectories by **eliminating redundancies** and **enhancing efficiency** using insights from the entire trajectory pool. After new trajectories are formed, this step further hones them by removing unnecessary steps, streamlining action sequences, and incorporating **risk-aware guidance** that prevents systematic blind spots and failure modes learned from the collective exploration history.
 
 <div align="center">
-<img src="static/img/se-agent-case-study.png" alt="SE-Agent Case Study" width="600px" />
+<img src="static/img/se-agent-case-study.png" alt="SE-Agent Case Study" width="1000px" />
 </div>
 
 
