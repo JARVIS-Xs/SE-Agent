@@ -29,7 +29,7 @@
 **SE-Agent** is a **self-evolution framework** that enables information exchange between reasoning paths through a trajectory-level evolution mechanism, breaking the cognitive limitations of single trajectories. This approach expands the search space, escapes local optima, and demonstrates emergent capabilities from collective interactions, achieving **80% Top1 performance** on **SWE-bench Verified**, truly realizing autonomous evolution for LLM-based agents in complex reasoning tasks.
 
 <div align="center">
-<img src="static/img/framework@2x.jpg" alt="SE-Agent Framework" width="800px" />
+<img src="static/img/framework.jpg" alt="SE-Agent Framework" width="800px" />
 </div>
 
 ### 📊 Performance Results
