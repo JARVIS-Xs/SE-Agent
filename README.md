@@ -38,7 +38,7 @@
 SE-Agent ranks **Top1 among open-source frameworks** on SWE-bench Verified.
 
 <div align="center">
-<img src="static/img/ranking_new.jpg" alt="Open-Source Framework Comparison" width="1600px" />
+<img src="static/img/ranking_new.jpg" alt="Open-Source Framework Comparison" width="800px" />
 </div>
 
 #### ✨ Performance Comparison: Leading with Significant Gains!
