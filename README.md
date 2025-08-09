@@ -2,7 +2,7 @@
 
 <table border="0">
   <tr>
-    <td><img src="static/img/logo.png" alt="SE-Agent Logo" width="200"/></td>
+    <td><img src="static/img/logo.png" alt="SE-Agent Logo" width="250"/></td>
     <td><h1>SE-Agent: Self-Evolution Trajectory Optimization in Multi-Step Reasoning with LLM-Based Agents</h1></td>
   </tr>
 </table>
@@ -19,8 +19,6 @@
   <a href="https://www.swebench.com"><img src="https://img.shields.io/badge/SWE--bench-Verified%20%231-gold.svg" alt="SWE-bench"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
 </p>
-
-</div>
 
 ---
 
@@ -42,6 +40,8 @@ SE-Agent ranks **Top1 among open-source frameworks** on SWE-bench Verified.
 </div>
 
 #### ✨ Performance Comparison: Leading with Significant Gains!
+SE-Agent gain significant gains on SWE-bench Verified **across various open-source/closed-source LLMs**.
+
 <div align="center">
 <img src="static/img/table1.png" alt="SE-Agent Framework Illustration" width="800px" />
 </div>
@@ -67,7 +67,7 @@ python SE/basic_run.py --mode execute
 ```
 
 **Expected Output:**
-```
+```text
 ✅ SE-Agent initialized successfully
 🔄 Starting self-evolution with 3 iterations  
 ```
@@ -107,8 +107,11 @@ strategy_config = {
         {"base_config": "enhanced", "operator": "crossover"}
     ]
 }
+```
 
-# Run self-evolution process
+Run self-evolution process
+
+```bash
 python SE/basic_run.py --config SE/configs/se_configs/experiment.yaml --mode execute
 ```
 
@@ -162,7 +165,7 @@ SE-Agent provides comprehensive documentation for different use cases:
 
 SE-Agent consists of **three main components** working in harmony:
 
-```
+```text
 📁 SE-Agent Architecture
 ├── 🧠 SE Framework (SE/)
 │   ├── Multi-iteration experiment orchestration
